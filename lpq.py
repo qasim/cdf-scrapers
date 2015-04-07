@@ -9,12 +9,12 @@ def getData(printer):
     data = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
     return(data.decode('utf-8').split('\n'))
 
-def parseData(list):
+def parseData(data):
     """Returns the print queue jobs in a nicely formatted list of JSON objects."""
     parsed = []
     queued = False
  
-    for line in list:
+    for line in data:
         # Skip all the header lines
         if 'Rank   Owner/ID' in line:
             queued = True
@@ -51,7 +51,6 @@ if __name__ == '__main__':
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 
     data['timestamp'] = st
-    
     data['2210a'] = parseData(p2210a)
     data['2210b'] = parseData(p2210b)
     data['3185a'] = parseData(p3185a)
