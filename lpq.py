@@ -10,8 +10,33 @@ def getData(printer):
     return(data.decode('utf-8').split('\n'))
 
 def parseData(list):
-    """Returns the list without the header lines."""
-    return list[0:]
+    """Returns the print queue jobs in a nicely formatted list of JSON objects."""
+    parsed = []
+    queued = False
+ 
+    for line in list:
+        # Skip all the header lines
+        if 'Rank   Owner/ID' in line:
+            queued = True
+            continue
+
+        # Actual queued jobs
+        if queued and line:
+            job_data = line.split()
+
+            #  Rank   Owner/ID               Pr/Class Job Files                 Size Time
+            job = {}
+            job['rank']  = job_data[0]
+            job['owner'] = job_data[1]
+            job['class'] = job_data[2]
+            job['job']   = job_data[3]
+            job['files'] = job_data[4]
+            job['size']  = job_data[5]
+            job['time']  = job_data[6]
+
+            parsed.append(job)
+
+    return parsed
 
 if __name__ == '__main__':
     # Gets all the data
@@ -19,6 +44,7 @@ if __name__ == '__main__':
     p2210b = getData('p2210b')
     p3185a = getData('p3185a')
 
+    # Put data and timestamp in JSON to print to stdout
     data = {}
 
     ts = time.time()
