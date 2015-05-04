@@ -7,7 +7,7 @@ def getData(printer):
     """Return the data from calling lpq with the specified printer as a list."""
     cmd = 'lpq -P' + printer
     data = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
-    return(data.decode('utf-8').split('\n'))
+    return(data.decode('ISO-8859-1').split('\n'))
 
 def parseData(data):
     """Returns the print queue jobs in a nicely formatted list of JSON objects."""
