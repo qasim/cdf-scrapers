@@ -26,6 +26,7 @@ def parseData(data):
 
             #  Rank   Owner/ID               Pr/Class Job Files                 Size Time
             job = {}
+            job['raw']   = line
             job['rank']  = job_data[0]
             job['owner'] = job_data[1]
             job['class'] = job_data[2]
