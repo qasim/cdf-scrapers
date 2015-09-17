@@ -13,7 +13,7 @@ def parseData(data):
     """Returns the print queue jobs in a nicely formatted list of JSON objects."""
     parsed = []
     queued = False
- 
+
     for line in data:
         # Skip all the header lines
         if 'Rank   Owner/ID' in line:
@@ -24,16 +24,21 @@ def parseData(data):
         if queued and line:
             job_data = line.split()
 
-            #  Rank   Owner/ID               Pr/Class Job Files                 Size Time
             job = {}
             job['raw']   = line
             job['rank']  = job_data[0]
             job['owner'] = job_data[1]
             job['class'] = job_data[2]
             job['job']   = job_data[3]
-            job['files'] = job_data[4]
-            job['size']  = job_data[5]
-            job['time']  = job_data[6]
+
+            if 'ERROR' in line:
+                job['files'] = line[line.index('ERROR'):]
+                job['size']  = ''
+                job['time']  = ''
+            else:
+                job['files'] = ' '.join(job_data[4:-2])
+                job['size']  = job_data[-2]
+                job['time']  = job_data[-1]
 
             parsed.append(job)
 
