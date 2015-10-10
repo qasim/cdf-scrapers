@@ -3,28 +3,33 @@ import time
 import datetime
 import subprocess
 
-def getData(printer):
-    """Return the data from calling lpq with the specified printer as a list."""
-    cmd = 'lpq -P' + printer
+def getData():
+    """Return the data from calling lpq -a as a list."""
+    cmd = 'lpq -a'
     data = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
     return(data.decode('ISO-8859-1').split('\n'))
 
 def parseData(data):
     """Returns the print queue jobs in a nicely formatted list of JSON objects."""
-    parsed = []
-    queued = False
+    parsed = {}
+    printer = ''
 
     for line in data:
-        # Skip all the header lines
-        if '@wolf ' in line or '@ps2 \'Kyocera' in line:
+        # First line of section for a printer
+        if '@printsrv)' in line:
+            header_data = line.split()
+            printer = header_data[0]
+            parsed[printer] = []
+            continue
+
+        if '@wolf ' in line or '@ps2 \'' in line:
             continue
 
         if 'Rank   Owner/ID' in line:
-            queued = True
             continue
 
         # Actual queued jobs
-        if queued and line:
+        if line:
             job_data = line.split()
 
             job = {}
@@ -43,25 +48,20 @@ def parseData(data):
                 job['size']  = job_data[-2]
                 job['time']  = job_data[-1]
 
-            parsed.append(job)
+            parsed[printer].append(job)
 
     return parsed
 
 if __name__ == '__main__':
     # Gets all the data
-    p2210a = getData('p2210a')
-    p2210b = getData('p2210b')
-    p3185a = getData('p3185a')
+    raw_data = getData()
 
     # Put data and timestamp in JSON to print to stdout
-    data = {}
+    data = parseData(raw_data)
 
     ts = time.time()
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 
     data['timestamp'] = st
-    data['2210a'] = parseData(p2210a)
-    data['2210b'] = parseData(p2210b)
-    data['3185a'] = parseData(p3185a)
 
     print(json.dumps(data))
