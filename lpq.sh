@@ -1,6 +1,12 @@
 #!/bin/bash
 
-rm -f /h/u10/g3/00/g3cheunh/public_html/printdata.json
-/local/bin/python3 /h/u10/g3/00/g3cheunh/cdf-printdata/lpq.py > /h/u10/g3/00/g3cheunh/public_html/printdata.json
-chmod og+r /h/u10/g3/00/g3cheunh/public_html/printdata.json
+home="/h/u10/g3/00/g3cheunh"
+
+rm -f "$home/public_html/printdata.json"
+/local/bin/python3 "$home/cdf-printdata/lpq.py" > "$home/public_html/printdata.json"
+chmod og+r "$home/public_html/printdata.json"
+
+rm -f "$home/public_html/printdata_all.json"
+/local/bin/python3 "$home/cdf-printdata/lpqa.py" > "$home/public_html/printdata_all.json"
+chmod og+r "$home/public_html/printdata_all.json"
 

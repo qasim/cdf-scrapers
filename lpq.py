@@ -11,8 +11,15 @@ def getData():
 
     parsed = {}
     printer = ''
+    new_printer = False
 
     for line in data:
+        # New printer section: get description
+        if new_printer:
+            # parsed[printer]['description'] = line.split('@ps2 ')[1]
+            new_printer = False
+            continue
+
         # Header lines we don't care about
         if '@ps2 \'' in line or 'Rank   Owner/ID' in line:
             continue
@@ -22,6 +29,7 @@ def getData():
             header_data = line.split()
             printer = header_data[0].split('@')[0][1:]
             parsed[printer] = []
+            new_printer = True
             continue
 
         # Actual queued jobs
