@@ -2,7 +2,9 @@
 
 Simple Python and Bash shell scripts to get printer queue information for [CDF](http://www.cdf.toronto.edu/) printers.
 
-JSON file available here: <http://www.cdf.toronto.edu/~g3cheunh/printdata.json>
+Old format JSON file available here: <http://www.cdf.toronto.edu/~g3cheunh/printdata.json>
+
+JSON file available here: <http://www.cdf.toronto.edu/~g3cheunh/cdfprinters.json>
 
 Cron job:
 ```
