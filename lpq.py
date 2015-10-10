@@ -4,28 +4,24 @@ import datetime
 import subprocess
 
 def getData():
-    """Return the data from calling lpq -a as a list."""
-    cmd = 'lpq -a'
-    data = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read()
-    return(data.decode('ISO-8859-1').split('\n'))
-
-def parseData(data):
     """Returns the print queue jobs in a nicely formatted list of JSON objects."""
+
+    raw_data = subprocess.Popen('lpq -a', shell=True, stdout=subprocess.PIPE).stdout.read()
+    data = raw_data.decode('ISO-8859-1').split('\n')
+
     parsed = {}
     printer = ''
 
     for line in data:
+        # Header lines we don't care about
+        if '@ps2 \'' in line or 'Rank   Owner/ID' in line:
+            continue
+
         # First line of section for a printer
         if '@printsrv)' in line:
             header_data = line.split()
-            printer = header_data[0]
+            printer = header_data[0].split('@')[0][1:]
             parsed[printer] = []
-            continue
-
-        if '@wolf ' in line or '@ps2 \'' in line:
-            continue
-
-        if 'Rank   Owner/ID' in line:
             continue
 
         # Actual queued jobs
@@ -54,11 +50,9 @@ def parseData(data):
 
 if __name__ == '__main__':
     # Gets all the data
-    raw_data = getData()
+    data = getData()
 
-    # Put data and timestamp in JSON to print to stdout
-    data = parseData(raw_data)
-
+    # Add timestamp
     ts = time.time()
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 
