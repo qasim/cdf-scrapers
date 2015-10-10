@@ -16,6 +16,9 @@ def parseData(data):
 
     for line in data:
         # Skip all the header lines
+        if '@wolf ' in line or '@ps2 \'Kyocera' in line:
+            continue
+
         if 'Rank   Owner/ID' in line:
             queued = True
             continue
