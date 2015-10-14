@@ -9,6 +9,8 @@ def getData():
     raw_data = subprocess.Popen('lpq -a', shell=True, stdout=subprocess.PIPE).stdout.read()
     data = raw_data.decode('ISO-8859-1').split('\n')
 
+    junk = ['@ps2 \'', 'Rank   Owner/ID', 'no printable jobs in queue', 'no server active', 'Filter_status: ', ' Status: job ']
+
     parsed = {}
     printer = ''
     new_printer = False
@@ -20,12 +22,8 @@ def getData():
             new_printer = False
             continue
 
-        # Header lines we don't care about
-        if '@ps2 \'' in line or 'Rank   Owner/ID' in line:
-            continue
-
-        # Other junk
-        if 'no printable jobs in queue' in line or 'no server active' in line or 'Filter_status: ' in line:
+        # Skip lines we don't care about
+        if any(x in line for x in junk):
             continue
 
         # First line of section for a printer
