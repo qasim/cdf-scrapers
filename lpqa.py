@@ -24,6 +24,10 @@ def getData():
         if '@ps2 \'' in line or 'Rank   Owner/ID' in line:
             continue
 
+        # Other junk
+        if 'no printable jobs in queue' in line or 'no server active' in line or 'Filter_status: ' in line:
+            continue
+
         # First line of section for a printer
         if '@printsrv)' in line:
             header_data = line.split()
