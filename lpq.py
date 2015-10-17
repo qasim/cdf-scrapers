@@ -9,8 +9,8 @@ def getData():
     raw_data = subprocess.Popen('lpq -a', shell=True, stdout=subprocess.PIPE).stdout.read()
     data = raw_data.decode('ISO-8859-1').split('\n')
 
-    junk = ['@ps2 \'', 'Rank   Owner/ID', 'no printable jobs in queue', 'no server active',
-        'Filter_status: ', ' Status: job ', 'Unspooler: pid ']
+    junk = ['@ps2 \'', 'Rank   Owner/ID', ' printable jobs', 'no server active',
+        'Filter_status: ', ' Status: ', ': pid ']
 
     parsed = {}
     printer = ''
