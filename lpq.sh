@@ -1,13 +1,14 @@
 #!/bin/bash
 
 home="/h/u10/g3/00/g3cheunh"
+old_dump="$home/public_html/printdata.json"
+new_dump="$home/public_html/cdfprinters.json"
 
-rm -f "$home/public_html/printdata.json"
-rm -f "$home/public_html/cdfprinters.json"
+rm -f $old_dump
+rm -f $new_dump
 
-/local/bin/python3 "$home/cdf-printdata/lpq.py" > "$home/public_html/printdata.json"
-/local/bin/python3 "$home/cdf-printdata/lpqa.py" > "$home/public_html/cdfprinters.json"
+/local/bin/python3 "$home/cdf-printdata/lpq.py" > $old_dump
+/local/bin/python3 "$home/cdf-printdata/lpqa.py" > $new_dump
 
-chmod og+r "$home/public_html/printdata.json"
-chmod og+r "$home/public_html/cdfprinters.json"
-
+chmod og+r $old_dump
+chmod og+r $new_dump

@@ -9,19 +9,13 @@ def getData():
     raw_data = subprocess.Popen('lpq -a', shell=True, stdout=subprocess.PIPE).stdout.read()
     data = raw_data.decode('ISO-8859-1').split('\n')
 
-    junk = ['@ps2 \'', 'Rank   Owner/ID', 'no printable jobs in queue', 'no server active', 'Filter_status: ', ' Status: job ']
+    junk = ['@ps2 \'', 'Rank   Owner/ID', 'no printable jobs in queue', 'no server active',
+        'Filter_status: ', ' Status: job ', 'Unspooler: pid ']
 
     parsed = {}
     printer = ''
-    new_printer = False
 
     for line in data:
-        # New printer section: get description
-        if new_printer:
-            # parsed[printer]['description'] = line.split('@ps2 ')[1]
-            new_printer = False
-            continue
-
         # Skip lines we don't care about
         if any(x in line for x in junk):
             continue
@@ -31,7 +25,6 @@ def getData():
             header_data = line.split()
             printer = header_data[0].split('@')[0][1:]
             parsed[printer] = []
-            new_printer = True
             continue
 
         # Actual queued jobs
