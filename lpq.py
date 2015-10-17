@@ -54,7 +54,8 @@ def getData():
                 job['size']  = job_data[-2]
                 job['time']  = job_data[-1]
 
-            parsed[printer].append(job)
+            if not job in parsed[printer]:
+                parsed[printer].append(job)
 
     return parsed
 
