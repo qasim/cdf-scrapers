@@ -9,7 +9,7 @@ def getData():
     raw_data = subprocess.Popen('lpq -a', shell=True, stdout=subprocess.PIPE).stdout.read()
     data = raw_data.decode('ISO-8859-1').split('\n')
 
-    junk = ['@ps2 \'', 'Rank   Owner/ID', ' printable jobs', 'no server active',
+    junk = ['@ps2 \'', 'Rank   Owner/ID', ' printable job', 'no server active',
         'Filter_status: ', ' Status: ', ': pid ']
 
     parsed = {}
@@ -19,7 +19,7 @@ def getData():
     for line in data:
         # New printer section: get description
         if new_printer:
-            parsed[printer]['description'] = line.split('@ps2 ')[1]
+            # parsed[printer]['description'] = line.split('@ps2 ')[1]
             new_printer = False
             continue
 
