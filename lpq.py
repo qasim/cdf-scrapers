@@ -3,6 +3,10 @@ import time
 import datetime
 import subprocess
 
+# THIS FILE IS DEPRECATED
+# This is used to generate the JSON file used in older versions of the CDF Labs Android app.
+# It is only updated to deal with bugs.
+
 def getData():
     """Returns the print queue jobs in a nicely formatted list of JSON objects."""
 
