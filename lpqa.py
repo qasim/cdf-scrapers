@@ -32,6 +32,7 @@ def getData():
             header_data = line.split()
             printer = header_data[0].split('@')[0]
             parsed[printer] = {}
+            parsed[printer]['name'] = printer
             parsed[printer]['jobs'] = []
             new_printer = True
             continue
@@ -62,8 +63,10 @@ def getData():
     return parsed
 
 if __name__ == '__main__':
-    # Gets all the data
-    data = getData()
+    data = {}
+
+    # Gets all the printer data
+    data['printers'] = getData()
 
     # Add timestamp
     ts = time.time()
