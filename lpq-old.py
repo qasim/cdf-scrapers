@@ -3,6 +3,10 @@ import time
 import datetime
 import subprocess
 
+# THIS FILE IS DEPRECATED
+# This is used to generate the JSON file used in older versions of the CDF Labs Android app.
+# It is only updated to deal with bugs.
+
 def getData():
     """Returns the print queue jobs in a nicely formatted list of JSON objects."""
 
@@ -14,15 +18,8 @@ def getData():
 
     parsed = {}
     printer = ''
-    new_printer = False
 
     for line in data:
-        # New printer section: get description
-        if new_printer:
-            parsed[printer]['description'] = line.split('@ps2 ')[1]
-            new_printer = False
-            continue
-
         # Skip lines we don't care about
         if any(x in line for x in junk):
             continue
@@ -30,11 +27,8 @@ def getData():
         # First line of section for a printer
         if '@printsrv)' in line:
             header_data = line.split()
-            printer = header_data[0].split('@')[0]
-            parsed[printer] = {}
-            parsed[printer]['name'] = printer
-            parsed[printer]['jobs'] = []
-            new_printer = True
+            printer = header_data[0].split('@')[0][1:]
+            parsed[printer] = []
             continue
 
         # Actual queued jobs
@@ -57,16 +51,14 @@ def getData():
                 job['size']  = job_data[-2]
                 job['time']  = job_data[-1]
 
-            if not job in parsed[printer]['jobs']:
-                parsed[printer]['jobs'].append(job)
+            if not job in parsed[printer]:
+                parsed[printer].append(job)
 
     return parsed
 
 if __name__ == '__main__':
-    data = {}
-
-    # Gets all the printer data
-    data['printers'] = getData()
+    # Gets all the data
+    data = getData()
 
     # Add timestamp
     ts = time.time()
