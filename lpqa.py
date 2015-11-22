@@ -19,7 +19,7 @@ def getData():
     for line in data:
         # New printer section: get description
         if new_printer:
-            # parsed[printer]['description'] = line.split('@ps2 ')[1]
+            parsed[printer]['description'] = line.split('@ps2 ')[1]
             new_printer = False
             continue
 
