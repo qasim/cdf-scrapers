@@ -31,7 +31,7 @@ def getData():
         if '@printsrv)' in line:
             printer = line.split()[0].split('@')[0]
             parsed[printer] = {
-                'name': printer
+                'name': printer,
                 'jobs': []
             }
             new_printer = True
@@ -42,7 +42,7 @@ def getData():
             job_data = line.split()
 
             job = {
-                'raw':   line
+                'raw':   line,
                 'rank':  job_data[0],
                 'owner': job_data[1],
                 'class': job_data[2],
