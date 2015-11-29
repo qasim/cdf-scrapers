@@ -29,14 +29,11 @@ def getData():
 
         # First line of section for a printer
         if '@printsrv)' in line:
-            # Last printer
-            if printer:
-                parsed[printer]['length'] = len(parsed[printer]['jobs'])
-
             printer = line.split()[0].split('@')[0]
             parsed[printer] = {
-                'name': printer,
-                'jobs': []
+                'name':   printer,
+                'jobs':   [],
+                'length': 0
             }
             new_printer = True
             continue
@@ -64,6 +61,7 @@ def getData():
 
             if not job in parsed[printer]['jobs']:
                 parsed[printer]['jobs'].append(job)
+                parsed[printer]['length'] += 1
 
     return parsed
 
