@@ -29,6 +29,10 @@ def getData():
 
         # First line of section for a printer
         if '@printsrv)' in line:
+            # Last printer
+            if printer:
+                parsed[printer]['length'] = len(parsed[printer]['jobs'])
+
             printer = line.split()[0].split('@')[0]
             parsed[printer] = {
                 'name': printer,
