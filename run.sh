@@ -7,8 +7,8 @@ new_dump="$home/public_html/cdfprinters.json"
 rm -f $old_dump
 rm -f $new_dump
 
-/local/bin/python3 "$home/cdf-scrapers/printers/lpq-old.py" > $old_dump
-/local/bin/python3 "$home/cdf-scrapers/printers/lpq.py" > $new_dump
+/local/bin/python3 "$home/cdf-scrapers/printers/printers-deprecated.py" > $old_dump
+/local/bin/python3 "$home/cdf-scrapers/printers/printers.py" > $new_dump
 
 chmod og+r $old_dump
 chmod og+r $new_dump
