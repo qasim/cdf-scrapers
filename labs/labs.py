@@ -4,7 +4,7 @@ import json
 import time
 import urllib.request
 
-class MyHTMLParser(HTMLParser):
+class PageParser(HTMLParser):
     """Parser for CDF Lab Machine Usage page."""
     # Flag for whether an element should be parsed
     read_data = False
@@ -17,6 +17,9 @@ class MyHTMLParser(HTMLParser):
 
     # List of lab rooms/data
     data = []
+
+    # Timestamp
+    timestamp = ""
 
     def handle_starttag(self, tag, attrs):
         # Only read <td> tags
@@ -46,11 +49,11 @@ class MyHTMLParser(HTMLParser):
                 self.data[self.data_index]['percent'] = float(data)
 
             elif self.row_cell == 5:
-                timestamp = data.strip('\u00a0\\n')
+                if (self.timestamp == ""):
+                    timestamp = data.strip('\u00a0\\n')
+                    time.strptime(timestamp, '%a %b %d %H:%M:%S EST %Y')
+                    self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
 
-                time.strptime(timestamp, '%a %b %d %H:%M:%S EST %Y')
-
-                self.data[self.data_index]['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S')
                 self.row_cell = -1
                 self.data_index += 1
 
@@ -59,9 +62,10 @@ class MyHTMLParser(HTMLParser):
 
 if __name__ == '__main__':
     html = str(urllib.request.urlopen('http://www.cdf.toronto.edu/usage/usage.html').read())
-    parser = MyHTMLParser()
+    parser = PageParser()
     parser.feed(html)
 
     print(json.dumps({
-        'labs': parser.data
+        'labs'      : parser.data,
+        'timestamp' : parser.timestamp
     }))

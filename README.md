@@ -22,8 +22,8 @@ This is a library of scrapers for producing easy-to-consume JSON files of inform
         "busy": Number,
         "total": Number,
         "percent": Number,
-        "timestamp": String
-    }]
+    }],
+    "timestamp": String
 }
 ```
 
