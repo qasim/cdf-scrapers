@@ -6,13 +6,23 @@ This is a library of scrapers for producing easy-to-consume JSON files of inform
 ## Library Reference
 
 ### Lab machine availability
-**Coming soon**
 
 ##### Scraper source
 <http://www.cdf.toronto.edu/usage/usage.html>
 
 ##### Output format
-Not implemented.
+```js
+{
+    "labs": [{
+        "name": String,
+        "available": Number,
+        "busy": Number,
+        "total": Number,
+        "percent": Number,
+        "timestamp": String
+    }]
+}
+```
 
 ------
 

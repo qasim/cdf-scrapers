@@ -16,7 +16,9 @@ class MyHTMLParser(HTMLParser):
     data_index = 0
 
     # List of lab rooms/data
-    data = []
+    data = {
+        'labs': []
+    }
 
     def handle_starttag(self, tag, attrs):
         # Only read <td> tags
@@ -29,28 +31,28 @@ class MyHTMLParser(HTMLParser):
                 if (data != 'NX'):
                     data = 'BA ' + data
 
-                self.data.append({
+                self.data['labs'].append({
                     'name': data
                 })
 
             elif self.row_cell == 1:
-                self.data[self.data_index]['available'] = int(data)
+                self.data['labs'][self.data_index]['available'] = int(data)
 
             elif self.row_cell == 2:
-                self.data[self.data_index]['busy'] = int(data)
+                self.data['labs'][self.data_index]['busy'] = int(data)
 
             elif self.row_cell == 3:
-                self.data[self.data_index]['total'] = int(data)
+                self.data['labs'][self.data_index]['total'] = int(data)
 
             elif self.row_cell == 4:
-                self.data[self.data_index]['percent'] = float(data)
+                self.data['labs'][self.data_index]['percent'] = float(data)
 
             elif self.row_cell == 5:
                 timestamp = data.strip('\u00a0\\n')
 
                 time.strptime(timestamp, '%a %b %d %H:%M:%S EST %Y')
 
-                self.data[self.data_index]['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S')
+                self.data['labs'][self.data_index]['timestamp'] = time.strftime('%Y-%m-%d %H:%M:%S')
                 self.row_cell = -1
                 self.data_index += 1
 
