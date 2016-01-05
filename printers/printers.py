@@ -12,14 +12,13 @@ def getData():
     junk = ['@ps2 \'', 'Rank   Owner/ID', ' printable job', 'no server active',
         'Filter_status: ', ' Status: ', ': pid ']
 
-    parsed = {}
-    printer = ''
+    parsed = []
     new_printer = False
 
     for line in data:
         # New printer section: get description
         if new_printer:
-            parsed[printer]['description'] = line.split('@ps2 ')[1]
+            parsed[-1]['description'] = line.split('@ps2 ')[1]
             new_printer = False
             continue
 
@@ -30,11 +29,11 @@ def getData():
         # First line of section for a printer
         if '@printsrv)' in line:
             printer = line.split()[0].split('@')[0]
-            parsed[printer] = {
-                'name':   printer,
-                'jobs':   [],
-                'length': 0
-            }
+            parsed.append({
+                'name'   : printer,
+                'jobs'   : [],
+                'length' : 0
+            })
             new_printer = True
             continue
 
@@ -43,13 +42,13 @@ def getData():
             job_data = line.split()
 
             job = {
-                'raw':   line,
-                'rank':  job_data[0],
-                'owner': job_data[1],
-                'class': job_data[2],
-                'job':   job_data[3]
+                'raw'   : line,
+                'rank'  : job_data[0],
+                'owner' : job_data[1],
+                'class' : job_data[2],
+                'job'   : job_data[3]
             }
-            
+
             if 'ERROR' in line:
                 job['files'] = line[line.index('ERROR'):]
                 job['size']  = ''
@@ -60,15 +59,15 @@ def getData():
                 job['time']  = job_data[-1]
 
             if not job in parsed[printer]['jobs']:
-                parsed[printer]['jobs'].append(job)
-                parsed[printer]['length'] += 1
+                parsed[-1]['jobs'].append(job)
+                parsed[-1]['length'] += 1
 
     return parsed
 
 if __name__ == '__main__':
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-    
+
     print(json.dumps({
-        'printers':  getData(),
-        'timestamp': timestamp
+        'printers'  : getData(),
+        'timestamp' : timestamp
     }))
