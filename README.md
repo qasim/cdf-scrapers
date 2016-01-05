@@ -69,5 +69,5 @@ Output of the `lpq -a` command on a CDF machine.
 The scripts are currently being run every minute via a Cron job on a CDF machine:
 
 ```
-* * * * * /h/u10/g3/00/g3cheunh/cdf-printdata/lpq.sh
+* * * * * /h/u10/g3/00/g3cheunh/cdf-scrapers/lpq.sh
 ```
