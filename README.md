@@ -42,22 +42,20 @@ Output of the `lpq -a` command on a CDF machine.
 ##### Output format
 ```js
 {
-    "printers": {
-        name: {
-            "name": String,
-            "description": String,
-            "length": Number
-            "jobs": [{
-                "rank": String,
-                "owner": String,
-                "class": String,
-                "job": String,
-                "files": String,
-                "size": String,
-                "time": String
-            }]
-        }
-    }
+    "printers": [{
+        "name": String,
+        "description": String,
+        "length": Number
+        "jobs": [{
+            "rank": String,
+            "owner": String,
+            "class": String,
+            "job": String,
+            "files": String,
+            "size": String,
+            "time": String
+        }]
+    }],
     "timestamp": String
 }
 ```
