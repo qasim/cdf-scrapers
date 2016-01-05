@@ -12,9 +12,6 @@ class PageParser(HTMLParser):
     # A data row contains 6 cells
     row_cell = 0
 
-    # Current entry in data
-    data_index = 0
-
     # List of lab rooms/data
     data = []
 
@@ -37,16 +34,16 @@ class PageParser(HTMLParser):
                 })
 
             elif self.row_cell == 1:
-                self.data[self.data_index]['available'] = int(data)
+                self.data[-1]['available'] = int(data)
 
             elif self.row_cell == 2:
-                self.data[self.data_index]['busy'] = int(data)
+                self.data[-1]['busy'] = int(data)
 
             elif self.row_cell == 3:
-                self.data[self.data_index]['total'] = int(data)
+                self.data[-1]['total'] = int(data)
 
             elif self.row_cell == 4:
-                self.data[self.data_index]['percent'] = float(data)
+                self.data[-1]['percent'] = float(data)
 
             elif self.row_cell == 5:
                 if (self.timestamp == ""):
@@ -55,7 +52,6 @@ class PageParser(HTMLParser):
                     self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
 
                 self.row_cell = -1
-                self.data_index += 1
 
             self.row_cell += 1
             self.read_data = False
