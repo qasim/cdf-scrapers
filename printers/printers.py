@@ -18,7 +18,7 @@ def getData():
     for line in data:
         # New printer section: get description
         if new_printer:
-            parsed[-1]['description'] = line.split('@ps2 ')[1]
+            parsed[-1]['description'] = line.split('@ps2 ')[1].replace("'", "")
             new_printer = False
             continue
 
