@@ -65,7 +65,7 @@ def getData():
     return parsed
 
 if __name__ == '__main__':
-    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S') + ' EST'
 
     print(json.dumps({
         'printers'  : getData(),

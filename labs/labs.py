@@ -49,7 +49,7 @@ class PageParser(HTMLParser):
                 if (self.timestamp == ""):
                     timestamp = data.strip('\u00a0\\n')
                     time.strptime(timestamp, '%a %b %d %H:%M:%S EST %Y')
-                    self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+                    self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S') + ' EST'
 
                 self.row_cell = -1
 
