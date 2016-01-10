@@ -49,7 +49,7 @@ class PageParser(HTMLParser):
                 if (self.timestamp == ""):
                     timestamp = data.strip('\u00a0\\n')
                     time.strptime(timestamp, '%a %b %d %H:%M:%S EST %Y')
-                    self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S') + ' EST'
+                    self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S EST')
 
                 self.row_cell = -1
 
@@ -61,7 +61,9 @@ if __name__ == '__main__':
     parser = PageParser()
     parser.feed(html)
 
-    print(json.dumps({
+    output = json.dumps({
         'labs'      : parser.data,
         'timestamp' : parser.timestamp
-    }))
+    })
+
+    print(output)
