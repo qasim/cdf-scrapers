@@ -18,7 +18,7 @@ class PageParser(HTMLParser):
     data = []
 
     # Timestamp
-    timestamp = ""
+    timestamp = ''
 
     def handle_starttag(self, tag, attrs):
         # Only read <td> tags
@@ -48,9 +48,8 @@ class PageParser(HTMLParser):
                 self.data[-1]['percent'] = float(data)
 
             elif self.row_cell == 5:
-                if (self.timestamp == ""):
-                    timestamp = data.strip('\u00a0\\n')
-                    time.strptime(timestamp, '%a %b %d %H:%M:%S EST %Y')
+                if (self.timestamp == ''):
+                    time.strptime(data.strip('\u00a0\\n'), '%a %b %d %H:%M:%S EST %Y')
                     self.timestamp = time.strftime('%Y-%m-%d %H:%M:%S EST')
 
                 self.row_cell = -1
