@@ -67,6 +67,7 @@ Output of the `lpq -a` command on a CDF machine.
 The scripts are currently being run via Cron jobs on the CDF wolf server:
 
 ```
-*/5 * * * * /h/u10/g3/00/g3cheunh/cdf-scrapers/printers/run.sh
-*/10 * * * * * /h/u10/g3/00/g3cheunh/cdf-scrapers/labs/run.sh
+*/5 * * * * /local/bin/python3 ~/cdf-scrapers/printers/printers.py ~/public_html
+*/5 * * * * /local/bin/python3 ~/cdf-scrapers/printers/printers-deprecated.py ~/public_html
+*/10 * * * * * /local/bin/python3 ~/cdf-scrapers/labs/labs.py ~/public_html
 ```

@@ -1,7 +1,9 @@
-import json
-import time
 import datetime
+import json
+import os
 import subprocess
+import sys
+import time
 
 # THIS FILE IS DEPRECATED
 # This is used to generate the JSON file used in older versions of the CDF Labs Android app.
@@ -66,4 +68,15 @@ if __name__ == '__main__':
 
     data['timestamp'] = st
 
-    print(json.dumps(data))
+    output = json.dumps(data)
+
+    if len(sys.argv) > 1:
+        output_path = sys.argv[1]
+
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+
+        with open('%s/printdata.json' % (output_path), 'w+') as outfile:
+            outfile.write(output)
+    else:
+        print(output)
