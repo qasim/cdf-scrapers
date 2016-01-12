@@ -67,9 +67,18 @@ def getData():
 if __name__ == '__main__':
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S EST')
 
-    output = json.dumps({
+    data = json.dumps({
         'printers'  : getData(),
         'timestamp' : timestamp
     })
 
-    print(output)
+    if len(sys.argv) > 1:
+        output = sys.argv[1]
+
+        if not os.path.exists(output):
+            os.makedirs(output)
+
+        with open('%s/cdflabs.json' % (output), 'w+') as outfile:
+            outfile.write(data)
+    else:
+        print(data)
