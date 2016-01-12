@@ -78,7 +78,7 @@ if __name__ == '__main__':
         if not os.path.exists(output):
             os.makedirs(output)
 
-        with open('%s/cdflabs.json' % (output), 'w+') as outfile:
+        with open('%s/cdfprinters.json' % (output), 'w+') as outfile:
             outfile.write(data)
     else:
         print(data)
