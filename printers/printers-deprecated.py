@@ -76,7 +76,12 @@ if __name__ == '__main__':
         if not os.path.exists(output_path):
             os.makedirs(output_path)
 
-        with open('%s/printdata.json' % (output_path), 'w+') as outfile:
+        if len(sys.argv) == 3:
+            filename = sys.argv[2]
+        else:
+            filename = 'printdata.json'
+
+        with open('%s/%s' % (output_path, filename), 'w+') as outfile:
             outfile.write(output)
     else:
         print(output)
