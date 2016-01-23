@@ -60,9 +60,7 @@ Output of the `lpq -a` command on a CDF machine.
 }
 ```
 
-------
-
-#### Script usage
+## Usage
 
 To use the scripts, run them using [Python 3](http://python.org/).
 
@@ -80,9 +78,7 @@ Likewise, if there is no file name given, it simply uses the default file name:
 | printers.py            | cdfprinters.json  |
 | printers-deprecated.py | printdata.json    |
 
-------
-
-#### Running on CDF
+### Running on CDF
 
 The scripts are currently being run via Cron jobs on the CDF wolf server:
 
