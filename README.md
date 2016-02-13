@@ -1,4 +1,4 @@
-# cdf-scrapers
+# CDF Scrapers
 
 This is a library of scrapers for producing easy-to-consume JSON files of information for [CDF](http://www.cdf.toronto.edu/) services.
 
