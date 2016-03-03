@@ -73,7 +73,12 @@ if __name__ == '__main__':
         if not os.path.exists(output):
             os.makedirs(output)
 
-        with open('%s/cdflabs.json' % (output), 'w+') as outfile:
+        if len(sys.argv) == 3:
+            filename = sys.argv[2]
+        else:
+            filename = 'cdflabs.json'
+
+        with open('%s/%s' % (output, filename), 'w+') as outfile:
             outfile.write(data)
     else:
         print(data)

@@ -1,4 +1,4 @@
-# cdf-scrapers
+# CDF Scrapers
 
 This is a library of scrapers for producing easy-to-consume JSON files of information for [CDF](http://www.cdf.toronto.edu/) services.
 
@@ -60,9 +60,25 @@ Output of the `lpq -a` command on a CDF machine.
 }
 ```
 
-------
+## Usage
 
-#### Running on CDF
+To use the scripts, run them using [Python 3](http://python.org/).
+
+```shell
+$ python3 SCRIPT_NAME.py [OUTPUT_PATH] [FILE_NAME]
+```
+
+If no output path is given, the script prints the output to stdout.
+
+Likewise, if there is no file name given, it simply uses the default file name:
+
+| Script                 | Default file name |
+|------------------------|-------------------|
+| labs.py                | cdflabs.json      |
+| printers.py            | cdfprinters.json  |
+| printers-deprecated.py | printdata.json    |
+
+### Running on CDF
 
 The scripts are currently being run via Cron jobs on the CDF wolf server:
 
