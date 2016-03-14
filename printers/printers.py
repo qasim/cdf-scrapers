@@ -1,3 +1,4 @@
+import argparse
 import datetime
 import json
 import os
@@ -77,18 +78,25 @@ if __name__ == '__main__':
         'timestamp' : timestamp
     })
 
-    if len(sys.argv) > 1:
-        output = sys.argv[1]
+    argparser = argparse.ArgumentParser(description='Scraper for CDF printer queue data.')
+    argparser.add_argument('-o', '--output', help='The output path.', required=False)
+    argparser.add_argument('-f', '--filename', help='Filename.', required=False)
+
+    args = argparser.parse_args()
+
+    if args.output:
+        if not os.path.exists(args.output):
+            os.makedirs(args.output)
 
         if not os.path.exists(output):
             os.makedirs(output)
 
-        if len(sys.argv) == 3:
-            filename = sys.argv[2]
+        if args.filename:
+            filename = args.filename
         else:
             filename = 'cdfprinters.json'
 
-        with open('%s/%s' % (output, filename), 'w+') as outfile:
+        with open('%s/%s' % (args.output, filename), 'w+') as outfile:
             outfile.write(data)
     else:
         print(data)

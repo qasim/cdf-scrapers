@@ -1,4 +1,5 @@
 from html.parser import HTMLParser
+import argparse
 import datetime
 import json
 import os
@@ -67,18 +68,22 @@ if __name__ == '__main__':
         'timestamp' : parser.timestamp
     })
 
-    if len(sys.argv) > 1:
-        output = sys.argv[1]
+    argparser = argparse.ArgumentParser(description='Scraper for CDF lab data.')
+    argparser.add_argument('-o', '--output', help='The output path.', required=False)
+    argparser.add_argument('-f', '--filename', help='Filename.', required=False)
 
-        if not os.path.exists(output):
-            os.makedirs(output)
+    args = argparser.parse_args()
 
-        if len(sys.argv) == 3:
-            filename = sys.argv[2]
+    if args.output:
+        if not os.path.exists(args.output):
+            os.makedirs(args.output)
+
+        if args.filename:
+            filename = args.filename
         else:
             filename = 'cdflabs.json'
 
-        with open('%s/%s' % (output, filename), 'w+') as outfile:
+        with open('%s/%s' % (args.output, filename), 'w+') as outfile:
             outfile.write(data)
     else:
         print(data)

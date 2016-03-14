@@ -34,8 +34,6 @@ This is a library of scrapers for producing easy-to-consume JSON files of inform
 ##### Data
 <http://www.cdf.toronto.edu/~g3cheunh/cdfprinters.json>
 
-Old format: <http://www.cdf.toronto.edu/~g3cheunh/printdata.json>
-
 ##### Scraper source
 Output of the `lpq -a` command on a CDF machine.
 
@@ -65,18 +63,17 @@ Output of the `lpq -a` command on a CDF machine.
 To use the scripts, run them using [Python 3](http://python.org/).
 
 ```shell
-$ python3 SCRIPT_NAME.py [OUTPUT_PATH] [FILE_NAME]
+$ python3 SCRIPT_NAME.py -o [OUTPUT_PATH] -f [FILE_NAME]
 ```
 
 If no output path is given, the script prints the output to stdout.
 
 Likewise, if there is no file name given, it simply uses the default file name:
 
-| Script                 | Default file name |
-|------------------------|-------------------|
-| labs.py                | cdflabs.json      |
-| printers.py            | cdfprinters.json  |
-| printers-deprecated.py | printdata.json    |
+| Script      | Default file name |
+|-------------|-------------------|
+| labs.py     | cdflabs.json      |
+| printers.py | cdfprinters.json  |
 
 ### Running on CDF
 
@@ -84,6 +81,5 @@ The scripts are currently being run via Cron jobs on the CDF wolf server:
 
 ```
 */5 * * * * /local/bin/python3 ~/cdf-scrapers/printers/printers.py ~/public_html
-*/5 * * * * /local/bin/python3 ~/cdf-scrapers/printers/printers-deprecated.py ~/public_html
 */10 * * * * * /local/bin/python3 ~/cdf-scrapers/labs/labs.py ~/public_html
 ```
