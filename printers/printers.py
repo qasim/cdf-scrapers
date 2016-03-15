@@ -79,24 +79,24 @@ if __name__ == '__main__':
     })
 
     argparser = argparse.ArgumentParser(description='Scraper for CDF printer queue data.')
-    argparser.add_argument('-o', '--output', help='The output path.', required=False)
-    argparser.add_argument('-f', '--filename', help='Filename.', required=False)
+    argparser.add_argument('-o', '--output', help='The output path. Defaults to current directory.', required=False)
+    argparser.add_argument('-f', '--filename', help='The output filename. Defaults to "cdfprinters.json".', required=False)
 
     args = argparser.parse_args()
+    output = '.'
+    filename = 'cdfprinters.json'
 
     if args.output:
         if not os.path.exists(args.output):
             os.makedirs(args.output)
 
-        if not os.path.exists(output):
-            os.makedirs(output)
+        output = args.output
 
-        if args.filename:
-            filename = args.filename
-        else:
-            filename = 'cdfprinters.json'
+    if args.filename:
+        filename = args.filename
 
-        with open('%s/%s' % (args.output, filename), 'w+') as outfile:
+    if args.output or args.filename:
+        with open('%s/%s' % (output, filename), 'w+') as outfile:
             outfile.write(data)
     else:
         print(data)
