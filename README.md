@@ -1,6 +1,7 @@
 # CDF Scrapers
 
-This is a library of scrapers for producing easy-to-consume JSON files of information for [CDF](http://www.cdf.toronto.edu/) services.
+This is a library of scrapers for producing easy-to-consume JSON files of
+information for [CDF](http://www.cdf.toronto.edu/) services.
 
 
 ## Library Reference
@@ -66,20 +67,31 @@ To use the scripts, run them using [Python 3](http://python.org/).
 $ python3 SCRIPT_NAME.py -o [OUTPUT_PATH] -f [FILE_NAME]
 ```
 
-If no output path is given, the script prints the output to stdout.
+If no output path nor filename is given, the script prints the output to stdout.
 
-Likewise, if there is no file name given, it simply uses the default file name:
+If a filename is specified but no output path is provided, it will output the
+file into the same directory as the script.
+
+If an output path is specified but no file name is provided, it simply uses the
+default file name:
 
 | Script      | Default file name |
 |-------------|-------------------|
 | labs.py     | cdflabs.json      |
 | printers.py | cdfprinters.json  |
 
+You can use the `-h` flag to see information about the script usage at any time:
+
+```shell
+$ python3 SCRIPT_NAME.py -h
+```
+
+
 ### Running on CDF
 
 The scripts are currently being run via Cron jobs on the CDF wolf server:
 
 ```
-*/5 * * * * /local/bin/python3 ~/cdf-scrapers/printers/printers.py ~/public_html
-*/10 * * * * * /local/bin/python3 ~/cdf-scrapers/labs/labs.py ~/public_html
+*/5 * * * * /local/bin/python3 ~/cdf-scrapers/printers/printers.py -o ~/public_html
+*/10 * * * * * /local/bin/python3 ~/cdf-scrapers/labs/labs.py -o ~/public_html
 ```
