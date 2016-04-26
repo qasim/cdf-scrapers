@@ -50,8 +50,8 @@ def getData():
             job_data = line.split()
 
             job = OrderedDict([
-                ('rank', int(job_data[0])),
-                ('job', int(job_data[3]))
+                ('rank', job_data[0]),
+                ('job', job_data[3])
             ])
 
             if 'ERROR' in line:
@@ -59,7 +59,7 @@ def getData():
                 job['time']  = ''
                 job['error'] = line[line.index('ERROR'):]
             else:
-                job['size']  = int(job_data[-2])
+                job['size']  = job_data[-2]
                 job['time']  = job_data[-1]
                 job['error'] = ''
 
