@@ -56,7 +56,7 @@ def getData():
                 # TEMPORARILY HERE FOR COMPAT REASONS
                 ('owner', ''),
                 ('class', ''),
-                ('files': '')
+                ('files', '')
             ])
 
             if 'ERROR' in line:
