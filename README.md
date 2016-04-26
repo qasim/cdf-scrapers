@@ -47,11 +47,11 @@ Output of the `lpq -a` command on a CDF machine.
         "description": String,
         "length": Number
         "jobs": [{
-            "rank": String,
-            "class": String,
-            "job": String,
-            "size": String,
-            "time": String
+            "rank": Number,
+            "job": Number,
+            "size": Number,
+            "time": String,
+            "error": String
         }]
     }]
 }
