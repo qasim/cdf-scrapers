@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from html.parser import HTMLParser
 import argparse
 import datetime
@@ -32,9 +33,9 @@ class PageParser(HTMLParser):
                 if (data != 'NX'):
                     data = 'BA ' + data
 
-                self.data.append({
-                    'name': data
-                })
+                self.data.append(OrderedDict([
+                    ('name', data)
+                ]))
 
             elif self.row_cell == 1:
                 self.data[-1]['available'] = int(data)
@@ -63,10 +64,10 @@ if __name__ == '__main__':
     parser = PageParser()
     parser.feed(html)
 
-    data = json.dumps({
-        'labs'      : parser.data,
-        'timestamp' : parser.timestamp
-    })
+    data = OrderedDict([
+        ('timestamp', parser.timestamp),
+        ('labs', parser.data)
+    ])
 
     argparser = argparse.ArgumentParser(description='Scraper for CDF lab data.')
     argparser.add_argument('-o', '--output', help='The output path. Defaults to current directory.', required=False)
@@ -87,6 +88,6 @@ if __name__ == '__main__':
 
     if args.output or args.filename:
         with open('%s/%s' % (output, filename), 'w+') as outfile:
-            outfile.write(data)
+            json.dump(data, outfile)
     else:
-        print(data)
+        print(json.dumps(data))

@@ -17,14 +17,14 @@ information for [CDF](http://www.cdf.toronto.edu/) services.
 ##### Output format
 ```js
 {
+    "timestamp": String,
     "labs": [{
         "name": String,
         "available": Number,
         "busy": Number,
         "total": Number,
         "percent": Number,
-    }],
-    "timestamp": String
+    }]
 }
 ```
 
@@ -41,21 +41,19 @@ Output of the `lpq -a` command on a CDF machine.
 ##### Output format
 ```js
 {
+    "timestamp": String,
     "printers": [{
         "name": String,
         "description": String,
         "length": Number
         "jobs": [{
             "rank": String,
-            "owner": String,
             "class": String,
             "job": String,
-            "files": String,
             "size": String,
             "time": String
         }]
-    }],
-    "timestamp": String
+    }]
 }
 ```
 

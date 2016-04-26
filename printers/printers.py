@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import argparse
 import datetime
 import json
@@ -35,11 +36,12 @@ def getData():
         # First line of section for a printer
         if '@printsrv)' in line:
             printer = line.split()[0].split('@')[0]
-            parsed.append({
-                'name'   : printer,
-                'jobs'   : [],
-                'length' : 0
-            })
+            parsed.append(OrderedDict([
+                ('name', printer),
+                ('description', ''),
+                ('length', 0),
+                ('jobs', [])
+            ]))
             new_printer = True
             continue
 
@@ -47,20 +49,18 @@ def getData():
         if line:
             job_data = line.split()
 
-            job = {
-                'raw'   : line,
-                'rank'  : job_data[0],
-                'owner' : job_data[1],
-                'class' : job_data[2],
-                'job'   : job_data[3]
-            }
+            job = OrderedDict([
+                ('rank', job_data[0]),
+                ('class', job_data[2]),
+                ('job', job_data[3])
+            ])
 
             if 'ERROR' in line:
-                job['files'] = line[line.index('ERROR'):]
+                job['error'] = line[line.index('ERROR'):]
                 job['size']  = ''
                 job['time']  = ''
             else:
-                job['files'] = ' '.join(job_data[4:-2])
+                job['error'] = ''
                 job['size']  = job_data[-2]
                 job['time']  = job_data[-1]
 
@@ -73,10 +73,10 @@ def getData():
 if __name__ == '__main__':
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S EST')
 
-    data = json.dumps({
-        'printers'  : getData(),
-        'timestamp' : timestamp
-    })
+    data = OrderedDict([
+        ('timestamp', timestamp),
+        ('printers', getData())
+    ])
 
     argparser = argparse.ArgumentParser(description='Scraper for CDF printer queue data.')
     argparser.add_argument('-o', '--output', help='The output path. Defaults to current directory.', required=False)
@@ -97,6 +97,6 @@ if __name__ == '__main__':
 
     if args.output or args.filename:
         with open('%s/%s' % (output, filename), 'w+') as outfile:
-            outfile.write(data)
+            json.dump(data, outfile)
     else:
-        print(data)
+        print(json.dumps(data))
