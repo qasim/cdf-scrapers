@@ -51,7 +51,11 @@ def getData():
 
             job = OrderedDict([
                 ('rank', job_data[0]),
-                ('job', job_data[3])
+                ('job', job_data[3]),
+
+                # TEMPORARILY HERE FOR COMPAT REASONS
+                ('owner', ''),
+                ('class', '')
             ])
 
             if 'ERROR' in line:
